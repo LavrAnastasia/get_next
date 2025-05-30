@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get _next_line.c                                   :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alavrukh <alavrukh@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 14:45:22 by alavrukh          #+#    #+#             */
-/*   Updated: 2025/05/28 15:11:34 by alavrukh         ###   ########.fr       */
+/*   Updated: 2025/05/30 15:56:08 by alavrukh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
+/* 
 char *get_next_line(int fd)
 {
 	char *line;
@@ -28,5 +28,20 @@ char *get_next_line(int fd)
 	}
 	line[bytes_read] = '\0';
 	return line;
+} */
+
+char *get_next_line (int fd)
+{
+	static char *reminder;
+	char *reading;
+	char *result;
+	
+	if (BUFFER_SIZE <= 0 || fd < 0)
+		return NULL;
+	reminder = NULL;
+	reading = (char*)malloc(sizeof(char) * (BUFFER_SIZE +1));
+	if (!reading)
+		free(reminder), 
+	return NULL;
 }
 
