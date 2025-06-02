@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alavrukh <alavrukh@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/23 14:45:22 by alavrukh          #+#    #+#             */
-/*   Updated: 2025/06/02 12:46:31 by alavrukh         ###   ########.fr       */
+/*   Created: 2025/06/02 12:39:59 by alavrukh          #+#    #+#             */
+/*   Updated: 2025/06/02 12:50:33 by alavrukh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*fill_line(int fd, char *remainder, char *buffer)
 {
@@ -64,25 +64,25 @@ char	*save_line(char *entire_line)
 
 char	*get_next_line(int fd)
 {
-	static char	*remainder;
+	static char	*remainder[MAX_FD];
 	char		*buffer;
 	char		*result;
 
-	if (BUFFER_SIZE <= 0 || fd < 0)
+	if (BUFFER_SIZE <= 0 || fd < 0 || fd >= MAX_FD)
 		return (NULL);
 	result = NULL;
 	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
 	{
-		free(remainder);
+		free(remainder[fd]);
 		return (NULL);
 	}
-	remainder = fill_line (fd, remainder, buffer);
+	remainder[fd] = fill_line (fd, remainder[fd], buffer);
 	free (buffer);
 	buffer = NULL;
-	if (!remainder)
+	if (!remainder[fd])
 		return (NULL);
-	result = remainder;
-	remainder = save_line(result);
+	result = remainder[fd];
+	remainder[fd] = save_line(result);
 	return (result);
 }
